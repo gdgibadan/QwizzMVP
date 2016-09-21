@@ -1,4 +1,4 @@
-package com.ibadan.gdg.qwizzmvp.Results;
+package com.ibadan.gdg.qwizzmvp.results;
 
 import android.content.Context;
 import android.net.Uri;

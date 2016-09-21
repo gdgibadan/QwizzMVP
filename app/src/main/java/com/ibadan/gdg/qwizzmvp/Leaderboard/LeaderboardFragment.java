@@ -1,4 +1,4 @@
-package com.ibadan.gdg.qwizzmvp.Leaderboard;
+package com.ibadan.gdg.qwizzmvp.leaderboard;
 
 import android.content.Context;
 import android.net.Uri;

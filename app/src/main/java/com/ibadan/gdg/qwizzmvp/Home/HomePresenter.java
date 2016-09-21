@@ -1,4 +1,4 @@
-package com.ibadan.gdg.qwizzmvp.Home;
+package com.ibadan.gdg.qwizzmvp.home;
 
 /**
  * Created by Hamza Fetuga on 9/20/2016.

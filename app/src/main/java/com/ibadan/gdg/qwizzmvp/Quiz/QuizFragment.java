@@ -1,4 +1,4 @@
-package com.ibadan.gdg.qwizzmvp.Quiz;
+package com.ibadan.gdg.qwizzmvp.quiz;
 
 
 import android.os.Bundle;

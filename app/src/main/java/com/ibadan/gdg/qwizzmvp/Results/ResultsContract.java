@@ -1,10 +1,9 @@
-package com.ibadan.gdg.qwizzmvp.Results;
+package com.ibadan.gdg.qwizzmvp.results;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.ibadan.gdg.qwizzmvp.Data.User;
+import com.ibadan.gdg.qwizzmvp.data.User;
 
 /**
  * Created by Hamza Fetuga on 9/20/2016.

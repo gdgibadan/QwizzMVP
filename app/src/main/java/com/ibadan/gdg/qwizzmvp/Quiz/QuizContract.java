@@ -1,11 +1,9 @@
-package com.ibadan.gdg.qwizzmvp.Quiz;
+package com.ibadan.gdg.qwizzmvp.quiz;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
-import com.ibadan.gdg.qwizzmvp.Data.Answer;
-import com.ibadan.gdg.qwizzmvp.Data.Question;
-import com.ibadan.gdg.qwizzmvp.Data.User;
+import com.ibadan.gdg.qwizzmvp.data.Answer;
+import com.ibadan.gdg.qwizzmvp.data.Question;
 
 /**
  * Created by Hamza Fetuga on 9/20/2016.

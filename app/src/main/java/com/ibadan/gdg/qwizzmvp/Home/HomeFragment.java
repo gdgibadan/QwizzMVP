@@ -1,4 +1,4 @@
-package com.ibadan.gdg.qwizzmvp.Home;
+package com.ibadan.gdg.qwizzmvp.home;
 
 
 import android.os.Bundle;
