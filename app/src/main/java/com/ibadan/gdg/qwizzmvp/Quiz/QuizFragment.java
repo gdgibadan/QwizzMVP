@@ -182,7 +182,7 @@ public class QuizFragment extends Fragment implements QuizContract.View {
         // remove keyboard
         ImeUtils.hideIme(binding.answerEdit);
 
-        // launch screen after delay
+        // launch screen
         Intent intent = new Intent(getContext(), ResultsActivity.class);
         intent.putExtra(Results.BUNDLE_KEY, results);
         startActivity(intent);

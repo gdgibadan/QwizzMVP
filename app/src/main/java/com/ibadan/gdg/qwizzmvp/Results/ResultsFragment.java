@@ -1,6 +1,8 @@
 package com.ibadan.gdg.qwizzmvp.results;
 
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -10,9 +12,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatDrawableManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.ibadan.gdg.qwizzmvp.R;
 import com.ibadan.gdg.qwizzmvp.data.model.CountryCapitalPair;
@@ -29,6 +33,7 @@ public class ResultsFragment extends Fragment implements ResultsContract.View {
     ResultsContract.Presenter presenter;
 
     FragmentResultsBinding binding;
+    private ProgressDialog pd;
 
     public ResultsFragment() {
         // Required empty public constructor
@@ -70,6 +75,14 @@ public class ResultsFragment extends Fragment implements ResultsContract.View {
     @Override
     public void showProgressIndicator(boolean active) {
 
+        if (active) {
+            if (pd == null) {
+                pd = new ProgressDialog(getContext());
+                pd.setMessage("Loading...");
+            }
+            pd.show();
+
+        } else if (pd != null) pd.dismiss();
     }
 
     @Override
@@ -90,11 +103,25 @@ public class ResultsFragment extends Fragment implements ResultsContract.View {
 
         // TODO: 22/09/2016 Animate diolog appearance
 
-        new AlertDialog.Builder(getContext())
-                .setMessage("")
-                .setView(R.layout.dialog_create_account)
-                .show()
-        ;
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.AppTheme_Dialog)
+                .setTitle("Create an account");
+
+        LayoutInflater inflater = LayoutInflater.from(builder.getContext());
+        View v = inflater.inflate(R.layout.dialog_create_account, null, false);
+        final EditText e = (EditText) v.findViewById(R.id.edit);
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                String text = e.getText().toString();
+                if (!TextUtils.isEmpty(text) && presenter != null) {
+                    presenter.submitUsername(text);
+                }
+            }
+        });
+        builder.setView(v);
+        builder.show();
     }
 
     @Override
@@ -107,6 +134,16 @@ public class ResultsFragment extends Fragment implements ResultsContract.View {
     public void hideSignInPrompt() {
         binding.signIn.setVisibility(View.GONE);
         binding.marginTop.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showError(String errorMessage) {
+        new AlertDialog.Builder(getContext()).setMessage(errorMessage).show();
+    }
+
+    @Override
+    public void clearError() {
+
     }
 
     @Override

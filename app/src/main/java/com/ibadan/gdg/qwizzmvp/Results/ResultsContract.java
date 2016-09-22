@@ -23,6 +23,10 @@ public interface ResultsContract {
         void showSignInPrompt();
 
         void hideSignInPrompt();
+
+        void showError(String errorMessage);
+
+        void clearError();
     }
 
     interface Presenter extends BasePresenter{
@@ -31,7 +35,7 @@ public interface ResultsContract {
 
         void onCreateAccount();
 
-        void checkUsernameUnique(String username);
+        void submitUsername(String username);
 
         void tryAgain();
     }
