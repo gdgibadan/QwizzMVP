@@ -2,42 +2,41 @@ package com.ibadan.gdg.qwizzmvp.quiz;
 
 import android.support.annotation.NonNull;
 
-import com.ibadan.gdg.qwizzmvp.data.Answer;
-import com.ibadan.gdg.qwizzmvp.data.Question;
+import com.ibadan.gdg.qwizzmvp.BasePresenter;
+import com.ibadan.gdg.qwizzmvp.BaseView;
+import com.ibadan.gdg.qwizzmvp.data.model.Capital;
+import com.ibadan.gdg.qwizzmvp.data.model.Country;
+import com.ibadan.gdg.qwizzmvp.data.model.Results;
 
 /**
  * Created by Hamza Fetuga on 9/20/2016.
  */
 public interface QuizContract {
 
-    interface View{
+    interface View extends BaseView<Presenter> {
+
 
         void showProgressIndicator(boolean active);
 
-        void displayQuestion(Question question);
+        void showQuestion(Country country);
 
-        void showProgress();
+        void pauseTimer();
 
-        void incrementTimer();
+        void resumeTimer();
 
-        void stopTimer();
+        void restartTimer();
 
-        void showCurrentScore(int score);
-
+        void showScore(Results results);
     }
 
-    interface UserActionsListener{
-
-        // scrambles the list of countries
-        void setupQuestions();
+    interface Presenter extends BasePresenter {
 
         // skips current question
-        void skipQuestion(int questionId);
+        void onSkipQuestion();
 
         // submits the answers and grades
-        void submitAnswer(@NonNull Question question,@NonNull Answer answer);
+        void onAnswerQuestion(@NonNull Capital capital);
 
-        //get the next question
-        Question getQuestion();
+        void onCountDownFinished();
     }
 }

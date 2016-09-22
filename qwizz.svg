@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="163px" height="163px" viewBox="0 0 163 163" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40 (33762) - http://www.bohemiancoding.com/sketch -->
+    <title>icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M84,100.474576 L153.333333,100.474576 L153.333333,136.169492 L84,136.169492 L84,100.474576 Z" id="path-1"></path>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.18 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <path d="M74,145.423729 C114.869071,145.423729 148,112.869518 148,72.7118644 C148,32.5542106 114.869071,0 74,0 C33.1309285,0 0,32.5542106 0,72.7118644 C0,112.869518 33.1309285,145.423729 74,145.423729 Z M74,128.059701 C105.252819,128.059701 130.588235,103.279631 130.588235,72.7118644 C130.588235,42.144098 105.252819,17.3640273 74,17.3640273 C42.7471806,17.3640273 17.4117647,42.144098 17.4117647,72.7118644 C17.4117647,103.279631 42.7471806,128.059701 74,128.059701 Z" id="path-3"></path>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.32 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <path d="M75.3333333,108.40678 C95.5837742,108.40678 112,92.1296744 112,72.0508475 C112,51.9720205 95.5837742,35.6949153 75.3333333,35.6949153 C55.0828925,35.6949153 38.6666667,51.9720205 38.6666667,72.0508475 C38.6666667,92.1296744 55.0828925,108.40678 75.3333333,108.40678 Z M75.3333333,97.7138584 C89.6277622,97.7138584 101.215686,86.224137 101.215686,72.0508475 C101.215686,57.8775579 89.6277622,46.3878365 75.3333333,46.3878365 C61.0389045,46.3878365 49.4509804,57.8775579 49.4509804,72.0508475 C49.4509804,86.224137 61.0389045,97.7138584 75.3333333,97.7138584 Z" id="path-5"></path>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.32 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="qwizz" transform="translate(-14.000000, -16.000000)">
+            <g id="icon" transform="translate(18.000000, 18.000000)">
+                <g id="Combined-Shape" transform="translate(118.666667, 118.322034) rotate(45.000000) translate(-118.666667, -118.322034) ">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill="#406680" fill-rule="evenodd" xlink:href="#path-1"></use>
+                </g>
+                <g id="Combined-Shape">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+                    <use fill="#406680" fill-rule="evenodd" xlink:href="#path-3"></use>
+                </g>
+                <g id="Combined-Shape">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                    <use fill="#406680" fill-rule="evenodd" xlink:href="#path-5"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
