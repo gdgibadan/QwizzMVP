@@ -53,7 +53,7 @@ public class QuizPresenter implements QuizContract.Presenter {
     @Override
     public void onSkipQuestion() {
 
-        // -1 denotes a skipped question that doesnt make it into the final score object
+        // -1 denotes a skipped question that doesn't make it into the final score object
         // This behavior is configurable in settings
         scores.put(current, -1);
 
@@ -66,13 +66,21 @@ public class QuizPresenter implements QuizContract.Presenter {
 
         CountryCapitalPair.storeUserCapital(current, capital);
         int score = CountryCapitalPair.checkAnswerCorrect(current, capital);
-
         // 0 denotes wrong, 1 denotes correct
-        scores.put(current, score);
 
-        // get the next questionin the stack and display
-        current = state.pop();
-        view.showQuestion(current.asCountry());
+        // if answer is correct
+        if (score == 1){
+            scores.put(current, score);
+
+            // get the next question in the stack and display
+            current = state.pop();
+            view.showQuestion(current.asCountry());
+        }
+        else{
+            // display wrong answer alert and clear the text box
+            view.displayWrongAnswerAlert();
+        }
+
     }
 
     @Override

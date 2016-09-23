@@ -105,6 +105,8 @@ public class ResultsPresenter implements ResultsContract.Presenter {
                 }
             }
         });
+
+        view.hideSignInPrompt();
     }
 
     private void replaceScoreIfHigher(final String username) {
