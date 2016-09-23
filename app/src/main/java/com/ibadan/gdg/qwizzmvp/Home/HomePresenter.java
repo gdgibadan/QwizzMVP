@@ -10,7 +10,6 @@ public class HomePresenter implements HomeContract.Presenter {
     private final HomeContract.View view;
 
     HomePresenter(HomeContract.View view) {
-        //this.view = checkNotNull(view, "Home.View cannot be null");
         this.view = view;
         this.view.setPresenter(this);
     }
