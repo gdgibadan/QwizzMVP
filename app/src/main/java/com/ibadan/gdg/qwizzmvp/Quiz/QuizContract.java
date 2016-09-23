@@ -27,6 +27,8 @@ public interface QuizContract {
         void restartTimer();
 
         void showScore(Results results);
+
+        void displayWrongAnswerAlert();
     }
 
     interface Presenter extends BasePresenter {

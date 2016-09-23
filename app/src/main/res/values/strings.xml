@@ -10,5 +10,6 @@
 
     <string name="sign_in_prompt">Sign in to be able to keep track of your scores.</string>
     <string name="question_label">"What is the capital of  "</string>
+    <string name="title_activity_leaderboard">LeaderboardActivity</string>
 
 </resources>

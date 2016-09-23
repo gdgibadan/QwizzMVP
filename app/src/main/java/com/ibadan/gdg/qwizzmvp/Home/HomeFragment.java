@@ -1,5 +1,6 @@
 package com.ibadan.gdg.qwizzmvp.home;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,13 +16,16 @@ import com.ibadan.gdg.qwizzmvp.quiz.QuizActivity;
 public class HomeFragment extends Fragment implements HomeContract.View {
 
     HomeContract.Presenter presenter;
+    //public static String TAG = "HomeFragment";
+    ProgressDialog progressDialog;
 
     public HomeFragment() {
     }
 
-    public static HomeFragment newInstance() {
-
-        return new HomeFragment();
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setPresenter(presenter);
     }
 
     @Override
@@ -53,19 +57,13 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        presenter.start();
-    }
-
-    @Override
     public void setPresenter(HomeContract.Presenter presenter) {
         this.presenter = presenter;
     }
 
     @Override
     public void showProgressIndicator(boolean active) {
-
+        if (active){ progressDialog.show(); } else { progressDialog.cancel();}
     }
 
     @Override
@@ -76,6 +74,12 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void showHighscore() {
+        // implement during demo.
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.start();
     }
 }

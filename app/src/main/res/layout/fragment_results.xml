@@ -29,7 +29,6 @@
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
                 android:textColor="#4d000000"
-
                 app:font="@{ `ubr` }"
                 android:textStyle="italic"
 

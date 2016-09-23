@@ -150,6 +150,7 @@ public class QuizFragment extends Fragment implements QuizContract.View {
 
         // Hack to fix truncated italic character
         binding.questionText.setText(country.getName() + " ");
+        binding.answerEdit.setError(null);
         binding.answerEdit.setText("");
     }
 
@@ -187,6 +188,12 @@ public class QuizFragment extends Fragment implements QuizContract.View {
         intent.putExtra(Results.BUNDLE_KEY, results);
         startActivity(intent);
         getActivity().finish();
+    }
+
+    @Override
+    public void displayWrongAnswerAlert() {
+        binding.answerEdit.setText("");
+        binding.answerEdit.setError("Wrong answer. Try Again");
     }
 
     @Override
