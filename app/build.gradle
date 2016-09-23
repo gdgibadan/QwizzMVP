@@ -19,6 +19,15 @@ android {
         }
     }
 
+    productFlavors {
+        prod {
+
+        }
+        mock {
+            applicationId "com.ibadan.gdg.qwizzmvp.mock"
+        }
+    }
+
     dataBinding.enabled = true
     aaptOptions.cruncherEnabled = false
 }
