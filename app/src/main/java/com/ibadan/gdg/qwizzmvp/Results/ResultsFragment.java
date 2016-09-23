@@ -1,109 +1,226 @@
-package com.ibadan.gdg.qwizzmvp.Results;
+package com.ibadan.gdg.qwizzmvp.results;
 
-import android.content.Context;
-import android.net.Uri;
+
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.databinding.DataBindingUtil;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatDrawableManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.ibadan.gdg.qwizzmvp.R;
+import com.ibadan.gdg.qwizzmvp.data.model.CountryCapitalPair;
+import com.ibadan.gdg.qwizzmvp.data.model.Results;
+import com.ibadan.gdg.qwizzmvp.databinding.FragmentResultsBinding;
+import com.ibadan.gdg.qwizzmvp.databinding.ItemResultBinding;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ResultsFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ResultsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class ResultsFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Locale;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class ResultsFragment extends Fragment implements ResultsContract.View {
 
-    private OnFragmentInteractionListener mListener;
+    ResultsContract.Presenter presenter;
+
+    FragmentResultsBinding binding;
+    private ProgressDialog pd;
 
     public ResultsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ResultsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ResultsFragment newInstance(String param1, String param2) {
-        ResultsFragment fragment = new ResultsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    public static ResultsFragment newInstance() {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        return new ResultsFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_results, container, false);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_results, container, false);
+        return binding.getRoot();
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        binding.buttonSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (presenter != null) presenter.onCreateAccount();
+            }
+        });
+
+        binding.list.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public void onResume() {
+        super.onResume();
+        presenter.start();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    @Override
+    public void showProgressIndicator(boolean active) {
+
+        if (active) {
+            if (pd == null) {
+                pd = new ProgressDialog(getContext());
+                pd.setMessage("Loading...");
+            }
+            pd.show();
+
+        } else if (pd != null) pd.dismiss();
+    }
+
+    @Override
+    public void showResults(Results results) {
+
+        ResultsAdapter adapter = new ResultsAdapter(results);
+        binding.list.swapAdapter(adapter, false);
+
+        binding.summary.setText(String.format(Locale.US, "%d skipped : %d attempts : %d correct",
+                results.getSkipped(),
+                results.getAttempted(),
+                results.getCorrect()
+        ));
+    }
+
+    @Override
+    public void showAccountCreateDialog() {
+
+        // TODO: 22/09/2016 Animate diolog appearance
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.AppTheme_Dialog)
+                .setTitle("Create an account");
+
+        LayoutInflater inflater = LayoutInflater.from(builder.getContext());
+        View v = inflater.inflate(R.layout.dialog_create_account, null, false);
+        final EditText e = (EditText) v.findViewById(R.id.edit);
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                String text = e.getText().toString();
+                if (!TextUtils.isEmpty(text) && presenter != null) {
+                    presenter.submitUsername(text);
+                }
+            }
+        });
+        builder.setView(v);
+        builder.show();
+    }
+
+    @Override
+    public void showSignInPrompt() {
+        binding.signIn.setVisibility(View.VISIBLE);
+        binding.marginTop.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideSignInPrompt() {
+        binding.signIn.setVisibility(View.GONE);
+        binding.marginTop.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showError(String errorMessage) {
+        new AlertDialog.Builder(getContext()).setMessage(errorMessage).show();
+    }
+
+    @Override
+    public void clearError() {
+
+    }
+
+    @Override
+    public void setPresenter(ResultsContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHolder> {
+
+        private Results results;
+        ArrayList<CountryCapitalPair> data;
+
+        ResultsAdapter(Results results) {
+
+            this.results = results;
+            this.data = new ArrayList<>(results.getScores().keySet());
+
+            // remove skipped items
+            Iterator<CountryCapitalPair> itr = data.iterator();
+
+            while (itr.hasNext()) {
+                CountryCapitalPair item = itr.next();
+                if (results.getScores().get(item) == -1) itr.remove();
+            }
+        }
+
+        @Override
+        public ResultsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+
+            ItemResultBinding binding =
+                    DataBindingUtil.inflate(inflater, R.layout.item_result, parent, false);
+
+            return new ViewHolder(binding);
+        }
+
+        @Override
+        public void onBindViewHolder(ResultsAdapter.ViewHolder holder, int position) {
+
+            CountryCapitalPair item = data.get(position);
+            int score = results.getScores().get(item);
+
+            holder.binding.questionText.setText(item.getCountry() + " ");
+            holder.binding.answerText.setText(item.getUserCapital() + " ");
+
+            Drawable wrong = AppCompatDrawableManager.get()
+                    .getDrawable(binding.getRoot().getContext(), R.drawable.wrong);
+            Drawable right = AppCompatDrawableManager.get()
+                    .getDrawable(binding.getRoot().getContext(), R.drawable.correct);
+
+            holder.binding.answerText.setCompoundDrawablesWithIntrinsicBounds(null, null,
+                    score == 0 ? wrong : score == 1 ? right : null, null);
+
+            if (score == 0) holder.binding.correctionText.setText(item.getCapital() + " ");
+        }
+
+        @Override
+        public int getItemCount() {
+            return data.size();
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder {
+
+            ItemResultBinding binding;
+
+            public ViewHolder(ItemResultBinding binding) {
+                super(binding.getRoot());
+
+                this.binding = binding;
+                binding.getRoot().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // handle click
+                    }
+                });
+            }
+        }
     }
 }
