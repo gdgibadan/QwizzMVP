@@ -7,6 +7,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatDrawableManager;
@@ -108,7 +109,7 @@ public class ResultsFragment extends Fragment implements ResultsContract.View {
 
         LayoutInflater inflater = LayoutInflater.from(builder.getContext());
         View v = inflater.inflate(R.layout.dialog_create_account, null, false);
-        final EditText e = (EditText) v.findViewById(R.id.edit);
+        final TextInputEditText e = (TextInputEditText) v.findViewById(R.id.edit);
 
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override

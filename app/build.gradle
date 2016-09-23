@@ -35,8 +35,8 @@ dependencies {
     compile 'com.android.support:design:23.4.0'
     compile 'com.google.android:flexbox:0.2.3'
     compile 'com.google.code.gson:gson:2.7'
-    compile 'com.google.firebase:firebase-crash:9.6.0'
-    compile 'com.google.firebase:firebase-database:9.6.0'
+    compile 'com.google.firebase:firebase-crash:9.0.0'
+    compile 'com.google.firebase:firebase-database:9.0.0'
     testCompile 'junit:junit:4.12'
 }
 
