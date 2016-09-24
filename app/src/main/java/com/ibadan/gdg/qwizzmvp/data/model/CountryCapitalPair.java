@@ -25,7 +25,7 @@ public class CountryCapitalPair implements Parcelable {
         }
     };
 
-    private static final String SPECIALS = "[-_.;:'\\s]+";
+    private static final String SPECIALS = "[-_.,;:'\\s]+";
 
     @SerializedName("_id") private String id;
     private String country;

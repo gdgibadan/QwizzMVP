@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.ibadan.gdg.qwizzmvp.R;
 import com.ibadan.gdg.qwizzmvp.data.model.CountryCapitalPair;
@@ -138,7 +139,8 @@ public class ResultsFragment extends Fragment implements ResultsContract.View {
 
     @Override
     public void showError(String errorMessage) {
-        new AlertDialog.Builder(getContext()).setMessage(errorMessage).show();
+        // new AlertDialog.Builder(getContext()).setMessage(errorMessage).show();
+        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
     }
 
     @Override

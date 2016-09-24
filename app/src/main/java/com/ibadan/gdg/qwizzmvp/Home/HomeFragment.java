@@ -76,6 +76,6 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void showHighscore() {
-
+        // TODO: 24/09/2016 Implement
     }
 }

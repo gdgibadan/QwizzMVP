@@ -54,7 +54,7 @@ public class QuizPresenter implements QuizContract.Presenter {
     public void onSkipQuestion() {
 
         // -1 denotes a skipped question that doesnt make it into the final score object
-        // This behavior is configurable in settings
+        // todo This behavior is configurable in settings
         scores.put(current, -1);
 
         current = state.pop();

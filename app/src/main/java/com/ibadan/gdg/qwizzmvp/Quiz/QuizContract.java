@@ -15,7 +15,6 @@ public interface QuizContract {
 
     interface View extends BaseView<Presenter> {
 
-
         void showProgressIndicator(boolean active);
 
         void showQuestion(Country country);
