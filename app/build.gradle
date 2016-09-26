@@ -24,7 +24,6 @@ android {
 
         }
         mock {
-            applicationId "com.ibadan.gdg.qwizzmvp.mock"
         }
     }
 
