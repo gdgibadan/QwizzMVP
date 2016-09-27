@@ -29,23 +29,23 @@ import static com.ibadan.gdg.qwizzmvp.util.Preconditions.checkNotNull;
 public class QuizPresenter implements QuizContract.Presenter {
 
     private static final int SCORE_MULTIPLIER = 1;
-    private static final String FILE = "country-capital-pairs.json";
+    /*** private testing **/ static final String FILE = "country-capital-pairs.json";
 
     private final Gson gson = new GsonBuilder().create();
 
     private final Context context;
     private final QuizContract.View view;
 
-    private CountryCapitalPair current;
-    private Stack<CountryCapitalPair> state;
+    /*** private testing **/ CountryCapitalPair current;
+    /*** private testing **/public Stack<CountryCapitalPair> state;
 
     // Should add a near accurate guess of the number of questions most users will answer as size
     private Map<CountryCapitalPair, Integer> scores;
 
-
     QuizPresenter(Context appContext, QuizContract.View view) {
 
-        this.context = checkNotNull(appContext.getApplicationContext(), "Context cannot be null");
+        //this.context = checkNotNull(appContext.getApplicationContext(), "Context cannot be null");
+        this.context = appContext.getApplicationContext();
         this.view = checkNotNull(view, "Quiz.View cannot be null");
         this.view.setPresenter(this);
     }
@@ -55,9 +55,9 @@ public class QuizPresenter implements QuizContract.Presenter {
 
         // -1 denotes a skipped question that doesn't make it into the final score object
         // This behavior is configurable in settings
-        scores.put(current, -1);
+        recordScore(current, -1);
 
-        current = state.pop();
+        current = getNextCountry();
         view.showQuestion(current.asCountry());
     }
 
@@ -73,7 +73,7 @@ public class QuizPresenter implements QuizContract.Presenter {
             scores.put(current, score);
 
             // get the next question in the stack and display
-            current = state.pop();
+            current = getNextCountry();
             view.showQuestion(current.asCountry());
         }
         else{
@@ -89,12 +89,18 @@ public class QuizPresenter implements QuizContract.Presenter {
 
         view.showProgressIndicator(true);
 
-        // calculate scores
-        Results results = new Results(scores);
-        results.compute(false);
+        // Calculate results
+        Results results = calculateScores();
+        checkNotNull(results, "Results cannot be null");
 
         view.showProgressIndicator(false);
         view.showScore(results);
+    }
+
+    public Results calculateScores(){
+        Results results = new Results(scores);
+        results.compute(false);
+        return results;
     }
 
     @Override
@@ -103,24 +109,36 @@ public class QuizPresenter implements QuizContract.Presenter {
         view.showProgressIndicator(true);
 
         // retrieve questions and randomize
-        List<CountryCapitalPair> questions = getAllQuestions();
-        Collections.shuffle(questions);
-
-        // init question/answer store. this represents the state of the view
-        state = new Stack<>();
-        scores = new LinkedHashMap<>();
-
-        state.addAll(questions);
+        // init question/answer store.
+        checkNotNull(getAndShuffleQuestions(), "Questions store cannot be null");
+        current = checkNotNull(getNextCountry(), "Country cannot be null");
 
         // display question
-        current = state.pop();
         view.showQuestion(current.asCountry());
 
         view.showProgressIndicator(false);
         view.restartTimer();
     }
 
-    private List<CountryCapitalPair> getAllQuestions() {
+    CountryCapitalPair getNextCountry(){
+        return state.pop();
+    }
+
+    void recordScore(CountryCapitalPair current, int m){
+        scores.put(current, m);
+    }
+
+    List<CountryCapitalPair> getAndShuffleQuestions(){
+        List<CountryCapitalPair> questions = getAllQuestions();
+        Collections.shuffle(questions);
+        // this represents the state of the view
+        state = new Stack<>();
+        scores = new LinkedHashMap<>();
+        state.addAll(questions);
+        return questions;
+    }
+
+    List<CountryCapitalPair> getAllQuestions() {
 
         // An optimization would be to hardcode the size of the list array here so there is
         // no array resizing when items exceed the default capacity

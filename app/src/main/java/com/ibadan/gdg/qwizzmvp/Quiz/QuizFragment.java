@@ -176,7 +176,6 @@ public class QuizFragment extends Fragment implements QuizContract.View {
 
     @Override
     public void showScore(final Results results) {
-
         //  disable input
         binding.answerEdit.setEnabled(false);
 
