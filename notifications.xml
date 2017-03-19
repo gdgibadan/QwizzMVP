@@ -3,5 +3,6 @@
     <notification groupId="Find in Path" displayType="TOOL_WINDOW" />
     <notification groupId="IDE Usage Statistics" displayType="STICKY_BALLOON" />
     <notification groupId="Indexing" />
+    <notification groupId="System Health" displayType="STICKY_BALLOON" />
   </component>
 </application>
